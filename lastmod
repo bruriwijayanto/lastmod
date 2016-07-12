@@ -1,0 +1,46 @@
+#!/bin/bash
+# find last modified file
+
+function install(){
+    cp "$0" /usr/bin
+    echo ":: install modified finder successfuly"
+}
+
+function getlastmod(){
+    echo ""
+    echo "modified file"
+    echo "-------------"
+    touch -t `date +%m%d0000` /tmp/$$
+    find * -type f -newer /tmp/$$
+    rm /tmp/$$
+    echo ""
+}
+
+clear
+
+if [ $# -eq 0 ]; then
+    getlastmod
+else
+    #echo "hallo $1"
+    if [ $1 = "install" ] ; then
+    install
+    fi
+
+    if [ $1 = "--help" ]; then
+cat <<EOL
+
+Penggunaan: lastmod [OPTION]
+Tool bantuan untuk menampilkan daftar file yg dimodifikasi
+
+Mandatory arguments
+  --help  : menampilkan bantuan
+
+      install  install ke /usr/bin
+
+Report lastmod bugs to bruri@gi.co.id
+GNU coreutils home page: <http://www.gnu.org/software/coreutils/>
+General help using GNU software: <http://www.gnu.org/gethelp/>
+
+EOL
+    fi
+fi
